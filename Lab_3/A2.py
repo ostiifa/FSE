@@ -1,5 +1,5 @@
 import string
-password = input()
+password = input("Введите пароль")
 errors = []
 if len(password) != 8:
     errors.append("Длина пароля не равна 8")
