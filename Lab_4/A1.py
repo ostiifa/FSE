@@ -1,66 +1,47 @@
 import random
 import time
+try:
+    N = int(input("Введите количество примеров: "))
+except ValueError:
+    print("Пожалуйста, введите целое число!")
+    exit()
+correct_answers = 0
+total_time = 0
+question_times = []
 
-
-def multiplication_trainer():
+print()
+for i in range(N):
+    a = random.randint(2, 9)
+    b = random.randint(2, 9)
+    correct_result = a * b
     while True:
         try:
-            n = int(input("Введите количество примеров: "))
-            if n > 0:
-                break
-            else:
-                print("Количество примеров должно быть положительным числом!")
-        except ValueError:
-            print("Пожалуйста, введите целое число!")
-
-    correct_answers = 0
-    total_time = 0
-    question_times = []
-
-    print("-" * 40)
-
-    for i in range(1, n + 1):
-        a = random.randint(2, 9)
-        b = random.randint(2, 9)
-        correct_result = a * b
-
-        print(f"Вопрос {i}/{n}")
-
-        while True:
             start_time = time.time()
+            user_answer = int(input(f"Вопрос {i + 1}/{N}\n{a} × {b} = "))
+            time_spent = time.time() - start_time
+            total_time += time_spent
+            question_times.append(time_spent)
+            if user_answer == correct_result:
+                print(f"Верно! (Время: {time_spent:.1f} сек)")
+                correct_answers += 1
+            else:
+                print(f"Неверно! Правильно: {correct_result} (Время: {time_spent:.1f} сек)")
 
-            try:
-                user_answer = input(f"{a} × {b} = ")
-                end_time = time.time()
+            break
 
-                time_spent = end_time - start_time
-                user_answer_int = int(user_answer)
+        except ValueErroR:
+            print("Пожалуйста, введите целое число!")
+print("\n" + "=" * 40)
+print("СТАТИСТИКА:")
+print("=" * 40)
+print(f"Общее время: {total_time:.1f} секунд")
 
-                if user_answer_int == correct_result:
-                    print(f"Верно! (Время: {time_spent:.1f} сек)")
-                    correct_answers += 1
-                else:
-                    print(f"Неверно! Правильно: {correct_result} (Время: {time_spent:.1f} сек)")
+if N > 0:
+    average_time = total_time / N
+    print(f"Среднее время на вопрос: {average_time:.1f} сек")
 
-                total_time += time_spent
-                question_times.append(time_spent)
-                break
+print(f"Правильных ответов: {correct_answers}/{N}")
 
-            except ValueError:
-                print("Пожалуйста, введите целое число!")
-
-    print("-" * 40)
-    print("СТАТИСТИКА:")
-    print(f"Общее время: {total_time:.1f} секунд")
-
-    if n > 0:
-        average_time = total_time / n
-        percentage = (correct_answers / n) * 100
-        print(f"Среднее время на вопрос: {average_time:.1f} сек")
-        print(f"Правильных ответов: {correct_answers}/{n}")
-        print(f"Процент правильных: {percentage:.1f}%")
-
-    print("-" * 40)
-
-if __name__ == "__main__":
-    multiplication_trainer()
+if N > 0:
+    percentage = (correct_answers / N) * 100
+    print(f"Процент правильных: {percentage:.1f}%")
